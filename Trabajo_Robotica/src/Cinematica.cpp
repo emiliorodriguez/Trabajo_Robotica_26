@@ -1,5 +1,6 @@
 #include <Cinematica.h>
 
+/*
 double L1, L2;
 //https://docs.arduino.cc/language-reference/#functions
 int calculo_angulos(double x, double y, double z) //Pasamos lel punto donde queremos ir
@@ -52,4 +53,53 @@ int calculo_angulos(double x, double y, double z) //Pasamos lel punto donde quer
     }
     
 
+}
+*/
+
+bool calcular_cinematica_inversa(double X, double Y, double Z, double phi_deg, 
+                                 double d1, double d2, double d3, double d4, double h, 
+                                 double &t1_deg, double &t2_deg, double &t3_deg, double &t4_deg) {
+    
+    // 1. Convertimos el ángulo deseado a radianes
+    double phi = phi_deg * (M_PI / 180.0);
+    
+    // 2. Base (t1)
+    double t1 = atan2(Y, X);
+    
+    // 3. Radio horizontal
+    double R = sqrt(X*X + Y*Y);
+    
+    // 4. Adaptamos el eje Z invertido (positivo hacia abajo)
+    double Z_plan = d1 - Z;
+    
+    // 5. EL NUEVO DESACOPLE DE LA MUÑECA (Con d4 y h)
+    // Como la Z del rotulador apunta hacia ABAJO (+h):
+    // - En horizontal (rw): retrocedemos d4, pero sumamos el efecto de h si se inclina.
+    // - En vertical (zw): restamos d4 si se inclina, y restamos h (porque la muñeca está más alta que la punta).
+    double rw = R - d4 * cos(phi) + h * sin(phi);
+    double zw = Z_plan - d4 * sin(phi) - h * cos(phi);
+    
+    // 6. Codo (t3)
+    double D = (rw*rw + zw*zw - d2*d2 - d3*d3) / (2.0 * d2 * d3);
+    
+    // Comprobamos si el brazo llega
+    if (D > 1.0 || D < -1.0) {
+        return false; // Punto inalcanzable
+    }
+    
+    double t3 = atan2(-sqrt(1.0 - D*D), D);
+    
+    // 7. Hombro (t2)
+    double t2 = atan2(zw, rw) - atan2(d3 * sin(t3), d2 + d3 * cos(t3));
+    
+    // 8. Muñeca (t4)
+    double t4 = phi - (t2 + t3);
+    
+    // 9. Convertimos todo a grados
+    t1_deg = t1 * (180.0 / M_PI);
+    t2_deg = t2 * (180.0 / M_PI);
+    t3_deg = t3 * (180.0 / M_PI);
+    t4_deg = t4 * (180.0 / M_PI);
+    
+    return true; 
 }

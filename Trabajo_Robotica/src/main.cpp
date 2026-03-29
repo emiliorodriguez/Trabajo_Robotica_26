@@ -2,13 +2,19 @@
 #include <Encoder.h>
 #include <Driver.h>
 #include <PID.h>
+#include <Cinematica.h>
 #include <Wire.h>//I2C
 #include <WiiChuck.h>
+#include <iostream>
+#include "Vector.h"
+
+using namespace std;
 
 
 // put function declarations here:
 
 Accessory nunchuck;
+
 
 void setup() {
   // put your setup code here, to run once:
