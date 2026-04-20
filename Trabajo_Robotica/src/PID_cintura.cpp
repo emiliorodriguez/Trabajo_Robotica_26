@@ -1,11 +1,11 @@
-#include<PID.h>
+#include<PID_cintura.h>
 
-const float Kp=10;
-const float Kd=2;
+const float Kp=3;
+const float Kd=15;
 const float Ki=0;
 
-volatile long int pos_actual=0;
-int pos_objetivo=1200;
+volatile float pos_actual=0;
+float pos_objetivo=0;
 
 float error_previo=0;
 float error_integral=0;
@@ -14,8 +14,7 @@ long int tiempo_previo=0;
 
 float senal_control=0;
 
-
-float control_pos(int actual)
+float control_pos_cintura(float actual, float objetivo)
 {
     pos_actual=actual;
 
@@ -25,7 +24,9 @@ float control_pos(int actual)
 
     tiempo_previo=tiempo_actual;
 
-    int error=pos_objetivo-pos_actual;//error
+    pos_objetivo=objetivo;
+
+    float error=pos_objetivo-pos_actual;//error
 
     //Parte derivada
     float de_dt=(error-error_previo)/diferencia_tiempo;
@@ -46,7 +47,7 @@ float control_pos(int actual)
 
 }
 
-void print_PID()//Graficamos con teleplot
+void print_PID_cintura()//Graficamos con teleplot
 {
     /*Serial.print("Objetivo: ");
     Serial.print(pos_objetivo);
