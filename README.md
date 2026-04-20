@@ -1,6 +1,6 @@
 # 🤖 Brazo Robótico de 4 DOF con Control Cinemático y Autónomo
 
-Este proyecto consiste en el diseño, programación y control de un brazo robótico de 4 grados de libertad (DOF) desarrollado para la asignatura de **Robótica**. El sistema combina control manual mediante un mando Wii Nunchuck y un modo autónomo capaz de realizar trayectorias precisas (como dibujar un cuadrado de 20x20 mm) utilizando cinemática inversa y control PID de lazo cerrado.
+Este proyecto consiste en el diseño, programación y control de un brazo robótico de 4 grados de libertad (DOF) desarrollado para la asignatura de **Robótica**. El sistema combina control manual mediante un mando Wii Nunchuck y un modo autónomo capaz de realizar trayectorias precisas utilizando cinemática inversa y control PID de lazo cerrado.
 
 ## 👥 Equipo de Trabajo
 * [Arnaiz, David]
@@ -69,4 +69,4 @@ El código se ha desarrollado de forma modular para facilitar el mantenimiento y
 1. **Requisitos:** Tener instalado [VS Code](https://code.visualstudio.com/) y la extensión [PlatformIO](https://platformio.org/).
 2. **Clonar repositorio:**
    ```bash
-   git clone [https://github.com/tu-usuario/nombre-repositorio.git](https://github.com/tu-usuario/nombre-repositorio.git)
+   git clone [https://github.com/emiliorodriguez/Trabajo_Robotica_26](https://github.com/emiliorodriguez/Trabajo_Robotica_26)
