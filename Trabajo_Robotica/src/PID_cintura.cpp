@@ -1,7 +1,7 @@
 #include<PID_cintura.h>
 
-const float Kp=3;
-const float Kd=15;
+const float Kp=1.0;
+const float Kd=0;
 const float Ki=0;
 
 volatile float pos_actual=0;

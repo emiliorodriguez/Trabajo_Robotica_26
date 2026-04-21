@@ -1,8 +1,8 @@
 #include<PID_hombro.h>
 
-const float Kp_hombro=10;
-const float Kd_hombro=2;
-const float Ki_hombro=0;
+const float Kp_hombro=25;
+const float Kd_hombro=0.5;
+const float Ki_hombro=5.0;
 
 volatile float pos_actual_hombro=0;
 float pos_objetivo_hombro=0;
