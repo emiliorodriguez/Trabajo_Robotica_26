@@ -1,8 +1,8 @@
 #include<PID_cintura.h>
 
-const float Kp=1.0;
-const float Kd=0;
-const float Ki=0;
+const float Kp=5;
+const float Kd=0.5;
+const float Ki=0.2;
 
 volatile float pos_actual=0;
 float pos_objetivo=0;
@@ -36,8 +36,17 @@ float control_pos_cintura(float actual, float objetivo)
     //Parte integral
     error_integral=error_integral+(error*diferencia_tiempo);//El error se acumula
 
+    if (error_integral > 150)
+    {
+        error_integral = 150; 
+    }
+    if (error_integral < -150)
+    {
+        error_integral = -150; 
+    }
+
     //PID completo
-    if(fabs(error)<2)//Definimos un umbral de error (Evitamos que el PID se obsesione)
+    if(fabs(error)<10)//Definimos un umbral de error (Evitamos que el PID se obsesione)
     {
         error_integral=0;//Dejamos de acumular error cuando estamos en la zona valida
         return 0;//Y cerramos la función

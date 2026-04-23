@@ -1,8 +1,8 @@
 #include<PID_hombro.h>
 
-const float Kp_hombro=25;
-const float Kd_hombro=0.5;
-const float Ki_hombro=5.0;
+const float Kp_hombro=5;//5
+const float Kd_hombro=0.5;//0.5
+const float Ki_hombro=0.2;//0.01
 
 volatile float pos_actual_hombro=0;
 float pos_objetivo_hombro=0;
@@ -36,9 +36,12 @@ float control_pos_hombro(float actual, float objetivo)
 
     //Parte integral
     error_integral_hombro=error_integral_hombro+(error*diferencia_tiempo);//El error se acumula
+    
+    if (error_integral_hombro > 150) error_integral_hombro = 150; 
+    if (error_integral_hombro < -150) error_integral_hombro = -150; 
 
     //PID completo
-    if(fabs(error)<2)//Definimos un umbral de error (Evitamos que el PID se obsesione)
+    if(fabs(error)<10)//Definimos un umbral de error (Evitamos que el PID se obsesione)
     {
         error_integral_hombro=0;//Dejamos de acumular error cuando estamos en la zona valida
         return 0;//Y cerramos la función

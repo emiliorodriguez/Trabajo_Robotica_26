@@ -1,8 +1,8 @@
 #include <Encoder_hombro.h>
 
 volatile long int pos_encoder_hombro=0;
-// 11 PPR * 450 Reducción * 1 (Modo lectura rising) = 4950
-const float PPR_TOTAL = 4950.0;
+// 11 PPR * 270 Reducción * 1 (Modo lectura rising) = 2970
+const float PPR_TOTAL = 2970.0;
 
 void encoder_hombro_init()
 {

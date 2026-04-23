@@ -140,8 +140,8 @@ const int CENTRO_Y = 131;
 const int DEADZONE = 10;    // Solo se mueve cuando el joystick está casi al límite
 const float SENSIBILIDAD_MUNECA = 5; // Grados que aumenta por cada ciclo (ajusta para más/menos velocidad)
 const float SENSIBILIDAD_CODO = 3;
-const float SENSIBILIDAD_HOMBRO = 10;
-const float SENSIBILIDAD_CINTURA = 5;
+const float SENSIBILIDAD_HOMBRO = 2.5;
+const float SENSIBILIDAD_CINTURA = 2.5;
 
 Accessory nunchuck;
 
@@ -188,12 +188,14 @@ std::vector<float> manejar_nunchuck_y_cinematica() {
     
     // Para los motores DC (Cintura y Hombro), convertimos grados a pasos
     // Reducción 450:1 -> 4950 pasos por cada 360 grados
-    float pasos_cintura = ang_cintura * (4950.0 / 360.0);
-    float pasos_hombro  = ang_hombro  * (4950.0 / 360.0);
+    float pasos_cintura = ang_cintura * (2970.0 / 360.0);
+    float pasos_hombro  = ang_hombro  * (2970.0 / 360.0);
 
     // Para los Servos (Codo y Muñeca), enviamos el ángulo directamente (0-180)
     float val_codo   = (float)ang_codo;
     float val_muneca = (float)ang_muneca;
+
+    
 
     // Devolvemos el vector con las 4 posiciones
     // [0]=Cintura(pasos), [1]=Hombro(pasos), [2]=Codo(grados), [3]=Muñeca(grados)
@@ -209,9 +211,9 @@ void nunchuck_debug_teleplot() {
     Serial.print(">JoyY:");
     Serial.println(nunchuck.getJoyY());
     
-    Serial.print(">BtnC:");
+    /*Serial.print(">BtnC:");
     Serial.println(nunchuck.getButtonC() ? 1 : 0);
     
     Serial.print(">BtnZ:");
-    Serial.println(nunchuck.getButtonZ() ? 1 : 0);
+    Serial.println(nunchuck.getButtonZ() ? 1 : 0);*/
 }

@@ -1,8 +1,8 @@
 #include <Encoder_cintura.h>
 
 volatile long int pos_encoder_cintura=0;
-// 11 PPR * 450 Reducción * 1 (Modo lectura rising) = 4950
-const float PPR_TOTAL = 4950.0;
+// 11 PPR * 270 Reducción * 1 (Modo lectura rising) = 2970
+const float PPR_TOTAL = 2970.0;
 
 void encoder_cintura_init()
 {

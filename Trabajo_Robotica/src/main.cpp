@@ -66,47 +66,67 @@ std::vector<float> objetivos = manejar_nunchuck_y_cinematica();
         ultima_muneca = objetivo_muneca;
     }
 
-  //float u = control_pos_cintura(pos_encoder_cintura, pos_objetivo_cintura);
+  float u = control_pos_cintura(pos_encoder_cintura, pos_objetivo_cintura);
   float u_hombro = control_pos_hombro(pos_encoder_hombro, pos_objetivo_hombro);
   
 
-  /*CINTURA
+
+  //CINTURA
   int direccion = (u >= 0) ? -1 : 1;
   float potencia = fabs(u);
 
   // Limitamos la potencia máxima para no forzar el driver
-  if (potencia > 100) potencia = 100;
+  if (potencia > 255) potencia = 255;
 
   // Zona muerta Cintura
-  if (fabs(pos_objetivo_cintura - pos_encoder_cintura) < 2) {
+  if (fabs(pos_objetivo_cintura - pos_encoder_cintura) < 10) {
     potencia = 0; 
   } 
-  else if (potencia > 0 && potencia < 70) {
-    potencia = 70; 
+  else if (potencia > 0 && potencia < 100) {
+    potencia = 100; 
   }
   // Enviamos orden Cintura
-  manejo_driver_cintura(direccion, potencia, pin_ENA, pin_IN1, pin_IN2);*/
+  manejo_driver_cintura(direccion, potencia, pin_ENA, pin_IN1, pin_IN2);
 
 
 
   //HOMBRO
-  int dir_hombro = (u_hombro >= 0) ? 1 : -1;
+  int dir_hombro = (u_hombro >= 0) ? -1 : 1;
   float pwr_hombro = fabs(u_hombro);
 
-  if (pwr_hombro > 200) pwr_hombro = 200;
+  if (pwr_hombro > 255) pwr_hombro = 255;
 
   // Zona muerta Hombro
-  if (fabs(pos_objetivo_hombro - pos_encoder_hombro) < 8) {
-    pwr_hombro = 0; 
-  } else if (pwr_hombro > 0 && pwr_hombro < 150) {
-    pwr_hombro = 150; 
+  if (fabs(pos_objetivo_hombro - pos_encoder_hombro) < 20) {
+    pwr_hombro = 0;   
+  } else if (pwr_hombro > 0 && pwr_hombro < 100) {
+    pwr_hombro = 100; 
   }
   //Enviamos orden hombro
-  manejo_driver_hombro(1, 200, pin_ENB, pin_IN3, pin_IN4);
+  manejo_driver_hombro(dir_hombro, pwr_hombro, pin_ENB, pin_IN3, pin_IN4);
 
-  nunchuck_debug_teleplot();
 
-  delay(20);
+
+  // 1. Comparamos el Objetivo vs la Posición Real del Encoder
+    // En Teleplot verás dos líneas que deben encontrarse
+    Serial.print(">Cintura_Objetivo:");
+    Serial.print(pos_objetivo_cintura); // El valor fijo que pusiste para la prueba
+    Serial.println("|g");
+
+    Serial.print(">Cintura_Actual:");
+    Serial.print(pos_encoder_cintura); // Variable definida en Encoder_hombro.cpp
+    Serial.println("|g");
+
+    // 2. Monitoreamos la potencia que el PID está pidiendo
+    Serial.print(">Cintura_Power_Output:");
+    Serial.print(potencia); // Variable calculada en main.cpp
+    Serial.println("|g");
+
+    nunchuck_debug_teleplot();
+
+    
+
+  delay(8); //Editar esto para control Nunchuck (si se baja hay mas PID)
 
   /* Manejo Electroiman
 
